@@ -13,10 +13,10 @@ router.get("/:serial", async (req, res) => {
     try {
         const gateway = await Gateway.findOne({ serialNumber: req.params.serial });
         if (!gateway)
-            return res.status(404).send("Gateway not found");
+            return res.status(404).json({ message:"Gateway not found"});
         res.send(gateway);
     } catch (e) {
-        res.status(500).json({ message: e.message });
+        res.status(400).json({ message: e.message });
     }
 });
 
@@ -25,8 +25,8 @@ router.post("/", async (req, res) => {
     try{
         await gateway.save();
         res.send(gateway);
-    }catch (e) {
-        res.status(400).send(e.message)
+    }catch (e) {       
+        res.status(400).json({ message: e.message });
     };
 });
 
@@ -35,20 +35,20 @@ router.patch("/:serial", async (req, res) => {
         new: true,
     });
     if (!gateway)
-        return res.status(404).send("Gateway not found");
+        return res.status(404).json({ message: "Gateway not found"});
     res.send(gateway);
 });
 
 router.delete("/:serial", async (req, res) => {
     const gateway = await Gateway.findOneAndDelete({ serialNumber: req.params.serial });
     if (!gateway)
-        return res.status(404).send("Gateway not found");
+        return res.status(404).json({ message: "Gateway not found"});
     res.send(gateway);
 });
 
 router.post("/:serial/device", async (req, res) => {
     const gateway = await Gateway.findOne({ serialNumber: req.params.serial });
-    if (!gateway) return res.status(404).send('Gateway not found.');
+    if (!gateway) return res.status(404).json({ message: "Gateway not found"});
 
     const device = {
         uid: req.body.uid,
@@ -63,22 +63,22 @@ router.post("/:serial/device", async (req, res) => {
 
         res.status(201).send(device);
     } catch (e) {
-        res.status(400).send(e.message);
+        res.status(400).json({ message: e.message});
     }
 });
 
 router.delete('/:serial/device/:uid', async (req, res) => {
     const gateway = await Gateway.findOne({ serialNumber: req.params.serial });
-    if (!gateway) return res.status(404).send('Gateway not found.');
+    if (!gateway) return res.status(404).json({ message: "Gateway not found"});
 
     const device =  gateway.devices.filter(function(e){
         return e.uid == req.params.uid;
     });
-    if (device.length == 0) return res.status(404).send('Device not found.');
+    if (device.length == 0) return res.status(404).json({ message:"Device not found"});
 
     await Gateway.updateOne({ "serialNumber": req.params.serial }, { $pull: { devices : {uid: req.params.uid}}});
 
-    res.send(device);
+    res.send(device[0]);
 });
 
 
