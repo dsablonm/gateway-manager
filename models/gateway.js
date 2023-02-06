@@ -11,7 +11,7 @@ const gatewaySchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    ipAddres: {
+    ipAddress: {
         type: String,
         required: true,
         validate(value) {
