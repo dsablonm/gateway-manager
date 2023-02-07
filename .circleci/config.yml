@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Start MongoDB
           command: |
-            sudo service mongodb start
+            sudo systemctl start mongodb
 
       - run:
           name: Run tests
