@@ -11,6 +11,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: running npm install
+          command: npm install
+      - run:
           name: Install dependencies
           command: npm ci
 
@@ -23,4 +26,4 @@ jobs:
 
       - run:
           name: Run tests
-          command: npm test
+          command: npm run test
