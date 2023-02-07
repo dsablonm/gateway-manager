@@ -19,11 +19,15 @@ jobs:
           command: npm ci
 
       - run:
+          name: Install MongoDB dependencies
+          command: |
+            apt-get update
+            apt-get install -y mongodb-server
+
+      - run:
           name: Start MongoDB
-          command: 
-            su apt-get update
-            su apt-get install mongodb-server
-            su service mongodb start
+          command: |
+            service mongodb start
 
       - run:
           name: Run tests
