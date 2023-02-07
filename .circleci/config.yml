@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Start MongoDB
           command: |
-            sudo systemctl start mongod.service
+            mongod
 
       - run:
           name: Install CI dependencies
