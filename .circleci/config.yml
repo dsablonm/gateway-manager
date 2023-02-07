@@ -1,34 +1,27 @@
 version: 2.1
 
 jobs:
-  start_mongo:
-    working_directory: ~/repo
-    docker:
-      - image: mongo:4
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    steps:
-      - run:
-          name: Start MongoDB
-          command: |
-            service mongodb start
-
   build:
     working_directory: ~/gateways-app
     docker:
-      - image: node:16
+      - image: node:lts
     environment:
-      - MONGO_URI: mongodb://root:password@localhost:27017/test
+      - MONGO_URI: mongodb://localhost:27017/test
+      - PORT: 4000
 
     steps:
       - checkout
       - run:
-          name: running npm install
-          command: npm install
+          name: Install NPM dependencies
+          command: |
+            npm install
+      - run:
+          name: Start MongoDB
+          command: |
+            docker run --name mongo_db -d mongo
 
       - run:
-          name: Install dependencies
+          name: Install CI dependencies
           command: npm ci
 
       - run:
@@ -36,5 +29,6 @@ jobs:
           command: npm run test
 
       - run:
-          name: Build app
-          command: npm run build
+          name: Stop MongoDB
+          command: |
+            docker stop mongo_db
