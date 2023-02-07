@@ -13,7 +13,7 @@ jobs:
       - run:
           name: running npm install
           command: npm install
-          
+
       - run:
           name: Install dependencies
           command: npm ci
@@ -22,7 +22,7 @@ jobs:
           name: Start MongoDB
           command: 
             su apt-get update
-            su apt-get install mongodb-server -y
+            su apt-get install mongodb-server
             su service mongodb start
 
       - run:
