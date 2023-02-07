@@ -5,7 +5,6 @@ jobs:
     working_directory: ~/gateways-app
     docker:
       - image: node:lts
-      - image: circleci/mongo:4.0-xenial-ram
     environment:
       - MONGO_URI: mongodb://localhost:27017/test
       - PORT: 4000
