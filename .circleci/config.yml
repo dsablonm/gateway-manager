@@ -1,0 +1,11 @@
+version: 2.1
+
+jobs:
+  build:
+    working_directory: ~/gateways-app
+    docker:
+      - image: node:14
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run test
