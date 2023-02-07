@@ -4,9 +4,7 @@ jobs:
   build:
     working_directory: ~/gateways-app
     docker:
-      - image: node:14
-        environment:
-          - MONGO_URI: mongodb://localhost:27017/test
+      - image: circleci/node:14
 
     steps:
       - checkout
@@ -17,12 +15,6 @@ jobs:
       - run:
           name: Install dependencies
           command: npm ci
-
-      - run:
-          name: Install MongoDB dependencies
-          command: |
-            apt-get update
-            apt-get install -y mongodb-server
 
       - run:
           name: Start MongoDB
