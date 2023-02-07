@@ -5,6 +5,7 @@ jobs:
     working_directory: ~/gateways-app
     docker:
       - image: node:lts
+      - image: circleci/mongo:4.0-xenial-ram
     environment:
       - MONGO_URI: mongodb://localhost:27017/test
       - PORT: 4000
@@ -18,7 +19,7 @@ jobs:
       - run:
           name: Start MongoDB
           command: |
-            sudo mongod
+            sudo systemctl start mongod.service
 
       - run:
           name: Install CI dependencies
