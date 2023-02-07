@@ -9,10 +9,7 @@ const expect = chai.expect;
 chai.use(chaiHttp);
 
 describe('Gateway Manager API', () => {
-  before(() => {
-    // Clear the database before each test
-  //  return Gateway.deleteMany({});
-  });
+
 
   describe('POST /api/gateway', () => {
     it('should create a new gateway', () => {
