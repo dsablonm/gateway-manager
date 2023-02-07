@@ -1,10 +1,25 @@
 version: 2.1
 
 jobs:
+  start_mongo:
+    working_directory: ~/repo
+    docker:
+      - image: mongo:4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    steps:
+      - run:
+          name: Start MongoDB
+          command: |
+            service mongodb start
+
   build:
     working_directory: ~/gateways-app
     docker:
-      - image: circleci/node:14
+      - image: node:16
+    environment:
+      - MONGO_URI: mongodb://root:password@localhost:27017/test
 
     steps:
       - checkout
@@ -15,11 +30,6 @@ jobs:
       - run:
           name: Install dependencies
           command: npm ci
-
-      - run:
-          name: Start MongoDB
-          command: |
-            sudo systemctl start mongodb
 
       - run:
           name: Run tests
