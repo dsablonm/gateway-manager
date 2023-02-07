@@ -1,4 +1,4 @@
-"# gateways-app"
+# gateways-app
 
 This project is an example for managing gateways and their associated devices.
 
