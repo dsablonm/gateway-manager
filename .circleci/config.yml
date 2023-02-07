@@ -19,7 +19,7 @@ jobs:
 
       - run:
           name: Start MongoDB
-          command: sudo su
+          command: su
               apt-get update
               apt-get install mongodb-server -y
               service mongodb start
