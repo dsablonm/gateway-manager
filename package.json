@@ -12,6 +12,8 @@
     "mocha": "^10.2.0",
     "mongodb": "^5.0.0",
     "mongoose": "^6.9.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^4.6.2",
     "validator": "^13.7.0"
   },
   "devDependencies": {

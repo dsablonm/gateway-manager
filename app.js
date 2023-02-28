@@ -1,8 +1,9 @@
 import * as dotenv from 'dotenv' 
-dotenv.config()
+dotenv.config();
 import express from "express";
 import mongoose from "mongoose";
 import gatewayRouter from "./routes/gateway.js";
+import swaggerDocs from "./swagger.js";
 
 const app = express();
 app.use(express.json());
@@ -24,6 +25,7 @@ const start = async () => {
 
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);
+        swaggerDocs(app, port);
     });
 };
 
